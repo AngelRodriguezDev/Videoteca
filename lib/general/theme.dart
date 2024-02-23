@@ -5,29 +5,21 @@ ThemeData themeAX = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.orange,
-    background: Colors.black,
-    onPrimary: Colors.orange,    
+    background: Color.fromRGBO(19, 31, 60, 1),
+    onPrimary: Colors.orange,
     brightness: Brightness.dark,
-    
   ),
-  appBarTheme: AppBarTheme(
-    backgroundColor: Colors.transparent
-  ),
-  textTheme: TextTheme(    
+  appBarTheme: AppBarTheme(backgroundColor: Colors.transparent),
+  textTheme: TextTheme(
     titleLarge: GoogleFonts.poppins(
-      color: Colors.white,
-      fontSize: 30,
-      fontWeight: FontWeight.bold
-    ),
+        color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
+    titleMedium: GoogleFonts.poppins(
+        color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
     bodyMedium: GoogleFonts.poppins(
-      color: Colors.white,
-      fontSize: 20,
-      fontWeight: FontWeight.w500
-    ),
+        color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
+    bodySmall: GoogleFonts.poppins(
+        color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
     displaySmall: GoogleFonts.poppins(
-      color: Colors.white,
-      fontSize: 12,
-      fontWeight: FontWeight.normal
-    ),
+        color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
   ),
 );
