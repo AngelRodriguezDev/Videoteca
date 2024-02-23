@@ -1,0 +1,5 @@
+package com.example.videoteca
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity()
