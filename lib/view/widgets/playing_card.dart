@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:videoteca/model/movie_model.dart';
 import 'package:videoteca/view/widgets/image_movie.dart';
 import 'package:videoteca/view/widgets/tag.dart';
@@ -17,7 +15,7 @@ class PlayingCard extends StatelessWidget {
         right: 24,
         bottom: 24,
       ),
-      child: Container(
+      child: SizedBox(
         height: 150,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

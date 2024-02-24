@@ -26,7 +26,6 @@ class BookmarkController with ChangeNotifier {
   }
 
   setSearch(String query) async {
-    print("soy una query --------------" + query);
     query.isEmpty ? _isSearching = false : _isSearching = true;
     _searchList = await ExternalData().searchMovie(query);
 

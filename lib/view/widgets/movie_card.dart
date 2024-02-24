@@ -9,7 +9,7 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData _theme = Theme.of(context);
-    return Container(
+    return SizedBox(
       width: 130,
       height: 275,
       child: Column(

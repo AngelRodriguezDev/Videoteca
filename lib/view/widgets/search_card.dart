@@ -26,7 +26,7 @@ class SearchCard extends StatelessWidget {
                   imgMovie: movie.image,
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 200,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,10 +55,10 @@ class SearchCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: double.maxFinite,
                       child: Text(
-                        "${movie.description}",
+                        movie.description,
                         style: _theme.textTheme.bodySmall,
                       ),
                     ),

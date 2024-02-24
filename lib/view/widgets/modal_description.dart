@@ -7,22 +7,20 @@ class ModalDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData _theme = Theme.of(context);
+    ThemeData auxTtheme = Theme.of(context);
     return AlertDialog(
       title: Center(child: Text(movie.name)),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              child: Image.network(
-                movie.image,
-                fit: BoxFit.cover,
-              ),
+            Image.network(
+              movie.image,
+              fit: BoxFit.cover,
             ),
             Text(
               "${movie.duration} | ${movie.tags}",
-              style: _theme.textTheme.bodySmall,
+              style: auxTtheme.textTheme.bodySmall,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -36,7 +34,7 @@ class ModalDescription extends StatelessWidget {
                 ),
                 Text(
                   movie.score.toString(),
-                  style: _theme.textTheme.bodySmall,
+                  style: auxTtheme.textTheme.bodySmall,
                 ),
               ],
             ),

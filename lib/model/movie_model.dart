@@ -1,5 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 class Movie {
   late String name;
   late String image;
@@ -24,10 +22,10 @@ class Movie {
     String gender = "";
 
     int i = 0;
-    for (Map _gender in json["genres"]) {
+    for (Map auxGender in json["genres"]) {
       i++;
-      gender += "${_gender["name"]}";
-      if (i < _gender.entries.length) gender += "/";
+      gender += "${auxGender["name"]}";
+      if (i < auxGender.entries.length) gender += "/";
     }
 
     name = json["title"];

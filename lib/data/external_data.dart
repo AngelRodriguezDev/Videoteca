@@ -3,13 +3,13 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:videoteca/model/movie_model.dart';
 
 class ExternalData {
-  String _trendings = "movie/popular?language=en-US&page=1";
-  String _nowPlaying = "movie/now_playing?language=en-US&page=1";
-  Dio _http = Dio(BaseOptions(headers: {
+  final String _trendings = "movie/popular?language=en-US&page=1";
+  final String _nowPlaying = "movie/now_playing?language=en-US&page=1";
+  final Dio _http = Dio(BaseOptions(headers: {
     "Content-Type": "application/json",
     "Authorization": dotenv.get("TOKEN"),
   }));
-  String _url = dotenv.get("URL");
+  final String _url = dotenv.get("URL");
 
   Future<List<Movie>> getTrendings() async {
     List<Movie> _trendingsList = [];
@@ -60,9 +60,8 @@ class ExternalData {
     return _searchList;
   }
 
-  getDescription(int movie_id) async {
-    Response _response = await _http.get(_url +
-        "/movie/$movie_id?append_to_response=watch%2Fproviders&language=en-US");
+  getDescription(int movieId) async {
+    Response _response = await _http.get("$_url/movie/$movieId?append_to_response=watch%2Fproviders&language=en-US");
     return _response.data;
   }
 }

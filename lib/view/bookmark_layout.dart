@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:videoteca/controller/bookmark_controller.dart';
-import 'package:videoteca/data/external_data.dart';
 import 'package:videoteca/model/movie_model.dart';
 import 'package:videoteca/view/widgets/modal_description.dart';
 import 'package:videoteca/view/widgets/movie_card.dart';
@@ -21,7 +18,6 @@ class _BookMarkPageState extends State<BookMarkPage> {
   TextEditingController txtController = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     context.read<BookmarkController>().setTrendingList();
     context.read<BookmarkController>().setNowPlayingList();
@@ -72,7 +68,7 @@ class _BookMarkPageState extends State<BookMarkPage> {
                   ),
                   label: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text("Search movie in your city..."),
                     ],
                   ),
