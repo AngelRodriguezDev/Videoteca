@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:videoteca/controller/bookmark_controller.dart';
 import 'package:videoteca/data/external_data.dart';
 import 'package:videoteca/model/movie_model.dart';
+import 'package:videoteca/view/widgets/modal_description.dart';
 import 'package:videoteca/view/widgets/movie_card.dart';
 import 'package:videoteca/view/widgets/playing_card.dart';
+import 'package:videoteca/view/widgets/search_card.dart';
 
 class BookMarkPage extends StatefulWidget {
   const BookMarkPage({super.key});
@@ -16,6 +18,7 @@ class BookMarkPage extends StatefulWidget {
 }
 
 class _BookMarkPageState extends State<BookMarkPage> {
+  TextEditingController txtController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -31,7 +34,9 @@ class _BookMarkPageState extends State<BookMarkPage> {
     List<Movie> _nowPlayingList =
         context.watch<BookmarkController>().nowPlayingList;
     ThemeData _theme = Theme.of(context);
-    print(_trendingList.length);
+
+    bool isSearching = context.watch<BookmarkController>().isSearching;
+
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -48,7 +53,17 @@ class _BookMarkPageState extends State<BookMarkPage> {
             child: SizedBox(
               height: 40,
               child: TextField(
+                controller: txtController,
                 decoration: InputDecoration(
+                  suffixIcon: isSearching
+                      ? IconButton(
+                          onPressed: () {
+                            txtController.clear();
+                            context.read<BookmarkController>().setSearch("");
+                          },
+                          icon: Icon(Icons.clear),
+                        )
+                      : Icon(Icons.search),
                   fillColor: Colors.white.withAlpha(30),
                   filled: true,
                   border: OutlineInputBorder(
@@ -59,53 +74,21 @@ class _BookMarkPageState extends State<BookMarkPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Search movie in your city..."),
-                      Icon(Icons.search),
                     ],
                   ),
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                 ),
+                onChanged: (value) {
+                  context.read<BookmarkController>().setSearch(value);
+                },
               ),
             ),
           ),
         ),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          color: _theme.colorScheme.background,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 24.0, top: 24, bottom: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        "TRENDING",
-                        style: _theme.textTheme.titleMedium,
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          for (int i = 0; i < _trendingList.length; i++)
-                            Padding(
-                              padding: const EdgeInsets.only(right: 24.0),
-                              child:
-                                  MovieCard(movie: _trendingList.elementAt(i)),
-                            ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
+        child: context.watch<BookmarkController>().isSearching
+            ? Padding(
                 padding: const EdgeInsets.only(
                   left: 24.0,
                 ),
@@ -116,25 +99,120 @@ class _BookMarkPageState extends State<BookMarkPage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
                       child: Text(
-                        "NOW PLAYING",
+                        "SEARCHING",
                         style: _theme.textTheme.titleMedium,
                       ),
                     ),
                     Column(
                       children: [
-                        for (int i = 0; i < 5; i++)
-                          PlayingCard(movie: _nowPlayingList.elementAt(i)),
+                        for (int i = 0;
+                            i <
+                                context
+                                    .watch<BookmarkController>()
+                                    .searchList
+                                    .length;
+                            i++)
+                          GestureDetector(
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (context) => ModalDescription(
+                                  movie: context
+                                      .watch<BookmarkController>()
+                                      .searchList
+                                      .elementAt(i)),
+                            ),
+                            child: SearchCard(
+                                movie: context
+                                    .watch<BookmarkController>()
+                                    .searchList
+                                    .elementAt(i)),
+                          ),
                       ],
                     ),
                   ],
                 ),
+              )
+            : Container(
+                color: _theme.colorScheme.background,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 24.0, top: 24, bottom: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              "TRENDING",
+                              style: _theme.textTheme.titleMedium,
+                            ),
+                          ),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                for (int i = 0; i < _trendingList.length; i++)
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 24.0),
+                                    child: GestureDetector(
+                                      onTap: () => showDialog(
+                                        context: context,
+                                        builder: (context) => ModalDescription(
+                                            movie: _trendingList.elementAt(i)),
+                                      ),
+                                      child: MovieCard(
+                                          movie: _trendingList.elementAt(i)),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 24.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Text(
+                              "NOW PLAYING",
+                              style: _theme.textTheme.titleMedium,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              for (int i = 0; i < _nowPlayingList.length; i++)
+                                GestureDetector(
+                                    onTap: () => showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              ModalDescription(
+                                                  movie: _nowPlayingList
+                                                      .elementAt(i)),
+                                        ),
+                                    child: PlayingCard(
+                                        movie: _nowPlayingList.elementAt(i))),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        //onTap: (value) => ExternalData().getTrendings(),
         items: const [
           BottomNavigationBarItem(
               icon: Icon(
