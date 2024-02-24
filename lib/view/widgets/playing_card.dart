@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:videoteca/model/movie_model.dart';
 import 'package:videoteca/view/widgets/image_movie.dart';
 import 'package:videoteca/view/widgets/tag.dart';
 
 class PlayingCard extends StatelessWidget {
-  const PlayingCard({super.key});
+  final Movie movie;
+  const PlayingCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,6 @@ class PlayingCard extends StatelessWidget {
         bottom: 24,
       ),
       child: Container(
-        //width: MediaQuery.of(context).size.width,
         height: 150,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,8 +27,7 @@ class PlayingCard extends StatelessWidget {
               alignment: Alignment.topRight,
               children: [
                 ImageMovie(
-                  imgMovie:
-                      "https://m.media-amazon.com/images/I/81y0foYjoFL._AC_UF894,1000_QL80_.jpg",
+                  imgMovie: movie.image,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -46,7 +47,7 @@ class PlayingCard extends StatelessWidget {
                           size: 12,
                         ),
                         Text(
-                          "9.2",
+                          movie.score.toString(),
                           style: _theme.textTheme.bodySmall,
                         )
                       ],
@@ -60,29 +61,28 @@ class PlayingCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        "nombre dasdasde la pelicula",
-                        style: _theme.textTheme.titleMedium,
+                        movie.name,
+                        style: _theme.textTheme.bodyLarge,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: Text(
-                        "2h 26min | action/adventure",
+                        "${movie.duration} | ${movie.tags}",
                         style: _theme.textTheme.bodySmall,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        TagMovie(tag: "XXI"),
-                        TagMovie(tag: "CVG"),
-                        TagMovie(tag: "Cinemaxx"),
+                        TagMovie(tag: movie.release),
                       ],
                     )
                   ],

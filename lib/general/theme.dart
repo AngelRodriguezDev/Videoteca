@@ -15,6 +15,8 @@ ThemeData themeAX = ThemeData(
         color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
     titleMedium: GoogleFonts.poppins(
         color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+    bodyLarge: GoogleFonts.poppins(
+        color: Colors.white, fontSize: 17, fontWeight: FontWeight.w700),
     bodyMedium: GoogleFonts.poppins(
         color: Colors.white, fontSize: 12, fontWeight: FontWeight.normal),
     bodySmall: GoogleFonts.poppins(

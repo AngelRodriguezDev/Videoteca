@@ -15,7 +15,7 @@ class ImageMovie extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             image: DecorationImage(
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.cover,
               image: NetworkImage(
                 imgMovie,
               ),

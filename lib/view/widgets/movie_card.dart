@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:videoteca/model/movie_model.dart';
 import 'package:videoteca/view/widgets/image_movie.dart';
 
 class MovieCard extends StatelessWidget {
-  const MovieCard({super.key});
+  final Movie movie;
+  const MovieCard({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     ThemeData _theme = Theme.of(context);
     return Container(
       width: 130,
+      height: 275,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: ImageMovie(
-              imgMovie:
-                  "https://m.media-amazon.com/images/I/81y0foYjoFL._AC_UF894,1000_QL80_.jpg",
+              imgMovie: movie.image,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Text(
-              "nombre de la pelicula",
+              movie.name,
               style: _theme.textTheme.bodyMedium,
             ),
           ),
@@ -35,14 +39,14 @@ class MovieCard extends StatelessWidget {
                   size: 12,
                 ),
                 Text(
-                  "9.2",
+                  movie.score.toString(),
                   style: _theme.textTheme.bodySmall,
                 )
               ],
             ),
           ),
           Text(
-            "2h 26min | action/adventure",
+            "${movie.duration} | ${movie.tags}",
             style: _theme.textTheme.bodySmall,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

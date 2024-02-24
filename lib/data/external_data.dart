@@ -13,34 +13,37 @@ class ExternalData {
   }));
   String _url = dotenv.get("URL");
 
-  getGenres() async {
-    Response _response = await _http.get(_url + _genres);
-    return _response.data;
-  }
-
   Future<List<Movie>> getTrendings() async {
-    print("solicitaste peliculas");
-
-    Map<String, dynamic> _genresList = await getGenres();
-
+    List<Movie> _trendingsList = [];
     Response _response = await _http.get(_url + _trendings);
     List _movieList = _response.data["results"];
 
-    List<Movie> _trendingsList = [];
-    _movieList.forEach((movie) async {
-      movie["image"] = dotenv.get("URL_IMAGE") + movie["poster_path"];
-      List aux_genre = [];
-      for (var element in movie["genre_ids"]) {
-        aux_genre.add((_genresList["genres"] as List)
-            .firstWhere((genre) => genre["id"] == element)["name"]);
-      }
-      movie["genre_list"] = aux_genre;
-      // Response auxresponse =
-      //     await _http.get(movie["image"], options: Options(headers: {}));
-      // print(auxresponse);
-      _trendingsList.add(Movie.fromJson(movie));
-    });
+    for (var movie in _movieList) {
+      var auxMovie = await getDescription(movie["id"]);
+      auxMovie["image"] = dotenv.get("URL_IMAGE") + movie["poster_path"];
+      _trendingsList.add(Movie.fromJson(auxMovie));
+    }
 
     return _trendingsList;
+  }
+
+  Future<List<Movie>> getNowPlaying() async {
+    List<Movie> _nowPlayingList = [];
+    Response _response = await _http.get(_url + _nowPlaying);
+    List _movieList = _response.data["results"];
+
+    for (var movie in _movieList) {
+      var auxMovie = await getDescription(movie["id"]);
+      auxMovie["image"] = dotenv.get("URL_IMAGE") + movie["poster_path"];
+      _nowPlayingList.add(Movie.fromJson(auxMovie));
+    }
+
+    return _nowPlayingList;
+  }
+
+  getDescription(int movie_id) async {
+    Response _response = await _http.get(_url +
+        "/movie/$movie_id?append_to_response=watch%2Fproviders&language=en-US");
+    return _response.data;
   }
 }

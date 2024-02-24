@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:videoteca/controller/bookmark_controller.dart';
 import 'package:videoteca/data/external_data.dart';
+import 'package:videoteca/model/movie_model.dart';
 import 'package:videoteca/view/widgets/movie_card.dart';
 import 'package:videoteca/view/widgets/playing_card.dart';
 
@@ -14,8 +17,21 @@ class BookMarkPage extends StatefulWidget {
 
 class _BookMarkPageState extends State<BookMarkPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<BookmarkController>().setTrendingList();
+    context.read<BookmarkController>().setNowPlayingList();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    List<Movie> _trendingList =
+        context.watch<BookmarkController>().trendingList;
+    List<Movie> _nowPlayingList =
+        context.watch<BookmarkController>().nowPlayingList;
     ThemeData _theme = Theme.of(context);
+    print(_trendingList.length);
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -77,10 +93,11 @@ class _BookMarkPageState extends State<BookMarkPage> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          for (int i = 0; i < 5; i++)
+                          for (int i = 0; i < _trendingList.length; i++)
                             Padding(
                               padding: const EdgeInsets.only(right: 24.0),
-                              child: MovieCard(),
+                              child:
+                                  MovieCard(movie: _trendingList.elementAt(i)),
                             ),
                         ],
                       ),
@@ -105,7 +122,8 @@ class _BookMarkPageState extends State<BookMarkPage> {
                     ),
                     Column(
                       children: [
-                        for (int i = 0; i < 5; i++) PlayingCard(),
+                        for (int i = 0; i < 5; i++)
+                          PlayingCard(movie: _nowPlayingList.elementAt(i)),
                       ],
                     ),
                   ],
@@ -116,7 +134,7 @@ class _BookMarkPageState extends State<BookMarkPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) => ExternalData().getTrendings(),
+        //onTap: (value) => ExternalData().getTrendings(),
         items: const [
           BottomNavigationBarItem(
               icon: Icon(
