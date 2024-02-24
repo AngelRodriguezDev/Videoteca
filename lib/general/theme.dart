@@ -5,7 +5,7 @@ ThemeData themeAX = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.orange,
-    background: Color.fromRGBO(19, 31, 60, 1),
+    background: Color.fromRGBO(17, 17, 46, 1),
     onPrimary: Colors.orange,
     brightness: Brightness.dark,
   ),
@@ -16,10 +16,8 @@ ThemeData themeAX = ThemeData(
     titleMedium: GoogleFonts.poppins(
         color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
     bodyMedium: GoogleFonts.poppins(
-        color: Colors.white, fontSize: 15, fontWeight: FontWeight.normal),
+        color: Colors.white, fontSize: 12, fontWeight: FontWeight.normal),
     bodySmall: GoogleFonts.poppins(
-        color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500),
-    displaySmall: GoogleFonts.poppins(
-        color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+        color: Colors.white, fontSize: 10, fontWeight: FontWeight.normal),
   ),
 );
